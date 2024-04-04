@@ -1,5 +1,7 @@
 import { styled } from "styled-components";
 import { Button } from "primereact/button"
+import { useContext } from "react";
+import { TeamContext } from "../../contexts/TeamContext";
 const TeamContainer = styled.div`
     background-color: #333333;
     border-radius: 5px;
@@ -44,16 +46,21 @@ interface TeamProps {
 }
 
 const Team = ({ nome, capacidade = 0, integrantes = [] }: TeamProps) => {
+    
+    const { setSidebar, confirmacao, setDialog } = useContext(TeamContext);
+
     return(
         <TeamContainer>
-            <h5>{nome} <i className="pi pi-eye"></i></h5>
+            <h5>{nome} <i className="pi pi-eye" onClick={() => setDialog(true)}></i></h5>
             <h1>{integrantes.length}<span>/{capacidade}</span></h1>
             <div className="acoes">
                 <Button
                     label="Adicionar"
+                    onClick={() => setSidebar(true)}
                 />
                 <Button 
                     icon={"pi pi-trash"}
+                    onClick={() => confirmacao()}
                 />
             </div>
         </TeamContainer>
